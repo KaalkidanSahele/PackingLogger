@@ -16,6 +16,11 @@ When running the file, the program has 3 options:
 
 Insert:
 
+<p float="left">
+  <img src="./terminal.JPG" width="100" />
+  <img src="./gui.JPG" width="100" /> 
+</p>
+
 Update:
 
 Query:
