@@ -12,7 +12,7 @@ SQLite database version: 3.43.1
 
 **COMMANDS**
 
-When running the file, the program has 3 options:
+When running the file, the program has 4 options: Insert, Delete, Update, Query. These are described below. 
 
 **INSERT**
 
