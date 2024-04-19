@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox, simpledialog
 import sqlite3
 import threading
 
@@ -28,7 +28,7 @@ def load_data():
     return rows
 
 def load_data():
-    conn = sqlite3.connection("packing.db")
+    conn = sqlite3.connect("packing.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM items")
     rows = cursor.fetchall()
@@ -49,11 +49,11 @@ def delete_item(id):
     conn.commit()
     conn.close()
 
-def query_item(search_query):
+def query_items(search_query):
     conn = sqlite3.connect("packing.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM items WHERE name LIKE ?  OR category LIKE ? OR status LIKE ?", 
-    ('%'+search_query+'%', '%'+search_query+'%', '%'+search_query+'%', '%'+search_query+'%'))
+    ('%'+search_query+'%', '%'+search_query+'%', '%'+search_query+'%'))
     rows = cursor.fetchall()
     conn.close()
     return rows
@@ -70,21 +70,30 @@ def view_data():
 def refresh_view():
     view_data()
 
-def change_status:
-    selected_item = tree.focus()
+def change_status():
+    selected_item = tree.selection()
     if selected_item:
-        item_id = tree.item(selected_item)['values'][0]
+        item_id = tree.item(selected_item, 'values')[0]
         new_status = simpledialog.askstring("Update Status", "Enter new status:")
-        if new_status:
+        if new_status:  # Making sure that the user didn't cancel the dialog
             update_status(item_id, new_status)
             refresh_view()
+    else:
+        messagebox.showinfo("Update Error", "No item selected. Please select an item to update.")
+
 
 def delete_selected_item():
-    selected_item = tree.focus()
+    selected_item = tree.selection()
     if selected_item:
-        item_id = tree.item(selected_item)['values'][0]
-        delete_item(item_id)
-        refresh_view()
+        item_id = tree.item(selected_item, 'values')[0]
+        # Use the messagebox to confirm deletion
+        if messagebox.askyesno("Confirm Delete", "Are you sure you want to delete this item?"):
+            delete_item(item_id)
+            tree.delete(selected_item)
+            print("Item deleted successfully.")
+    else:
+        messagebox.showwarning("Delete Error", "No item selected. Please select an item to delete.")
+
 
 def perform_query():
     search_query = simpledialog.askstring("Query Items", "Enter search term:")
