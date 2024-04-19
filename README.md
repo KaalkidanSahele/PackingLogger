@@ -53,6 +53,6 @@ Pressing query allows you to search for items. You can query by any column - nam
 Pressing OK shows the rows matching the query
   <img src="./GUI(query2).JPG" width="750" />
 Pressing refresh return the database back to its initial view
-  <img src="./GUI(query3).JPG" width="750" />
+  <img src="./GUI(refresh).JPG" width="750" />
 </p>
 
