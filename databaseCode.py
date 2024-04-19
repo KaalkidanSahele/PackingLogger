@@ -27,6 +27,37 @@ def load_data():
     conn.close()
     return rows
 
+def load_data():
+    conn = sqlite3.connection("packing.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM items")
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
+def update_status(id, new_status):
+    conn = sqlite3.connect("packing.db")
+    cursor = conn.cursor()
+    cursor.execute("UPDATE items SET status = ? WHERE ID = ?", (new_status, id))
+    conn.commit()
+    conn.close()
+
+def delete_item(id):
+    conn = sqlite3.connect("packing.db")
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM items WHERE id = ?", (id))
+    conn.commit()
+    conn.close()
+
+def query_item(search_query):
+    conn = sqlite3.connect("packing.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM items WHERE name LIKE ?  OR category LIKE ? OR status LIKE ?", 
+    ('%'+search_query+'%', '%'+search_query+'%', '%'+search_query+'%', '%'+search_query+'%'))
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
 
 # GUI
 def view_data():
@@ -39,6 +70,31 @@ def view_data():
 def refresh_view():
     view_data()
 
+def change_status:
+    selected_item = tree.focus()
+    if selected_item:
+        item_id = tree.item(selected_item)['values'][0]
+        new_status = simpledialog.askstring("Update Status", "Enter new status:")
+        if new_status:
+            update_status(item_id, new_status)
+            refresh_view()
+
+def delete_selected_item():
+    selected_item = tree.focus()
+    if selected_item:
+        item_id = tree.item(selected_item)['values'][0]
+        delete_item(item_id)
+        refresh_view()
+
+def perform_query():
+    search_query = simpledialog.askstring("Query Items", "Enter search term:")
+    if search_query:
+        rows = query_items(search_query)
+        for row in tree.get_children():
+            tree.delete(row)
+        for row in rows:
+            tree.insert("", tk.END, values=row)
+
 app = tk.Tk()
 app.title("Packing List")
 
@@ -49,8 +105,20 @@ tree.heading("Category", text="Category")
 tree.heading("Status", text="Status")
 tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
+###############
+##  BUTTONS  ##
+###############
+
 refresh_button = tk.Button(app, text="Refresh", command=refresh_view)
+update_button = tk.Button(app, text="Update Status", command=change_status)
+delete_button = tk.Button(app, text="Delete Item", command=delete_selected_item)
+query_button = tk.Button(app, text="Query", command=perform_query)
+
+
 refresh_button.pack(side=tk.RIGHT, padx=10, pady=10)
+update_button.pack(side=tk.RIGHT, padx=10, pady=10)
+delete_button.pack(side=tk.RIGHT, padx=10, pady=10)
+query_button.pack(side=tk.RIGHT, padx=10, pady=10)
 
 # Terminal Input Function
 def terminal_input():
