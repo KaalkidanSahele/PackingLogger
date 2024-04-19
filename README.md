@@ -42,8 +42,9 @@ First select the item whose status you'd like to delete.
 </br>
 A warning message box is shown.
   <img src="./images/GUI(delete2).JPG" width="750" />
+  </br>
 Pressing OK immediately deletes the item in the database and this is seen in the terminal.
-</br>
+
   <img src="./images/GUI(delete3).JPG" width="750" />
 </p>
 
