@@ -14,14 +14,14 @@ SQLite database version: 3.43.1
 
 When running the file, the program has 3 options:
 
-Insert:
+**INSERT**
 
 <p float="left">
   <img src="./images/terminal.JPG" width="750" />
   <img src="./images/gui.JPG" width="750" /> 
 </p>
 
-Update:
+**UPDATE**
 
 <p float="left">
 First select the item whose status you'd like to update.
@@ -34,11 +34,11 @@ Pressing OK immediately updates the status in the database
   <img src="./images/GUI(update3).JPG" width="750" />
 </p>
 
-Delete:
+**DELETE**
 
 <p float="left">
 First select the item whose status you'd like to delete.
-  <img src="./images/GUI(delete1).JPG" width="750" />
+  <img src="./images/GUI(delete).JPG" width="750" />
 </br>
 A warning message box is shown.
   <img src="./images/GUI(delete2).JPG" width="750" />
@@ -49,7 +49,7 @@ Pressing OK immediately deletes the item in the database and this is seen in the
 
 For both delete and update, if an item is not selected, a message box saying that an item has not been selected.
 
-Query:
+**QUERY**
 
 <p float="left">
 </br>
